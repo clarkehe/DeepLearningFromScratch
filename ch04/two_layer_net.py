@@ -22,11 +22,13 @@ class TwoLayerNet:
         b1, b2 = self.params['b1'], self.params['b2']
 
         # 每一张图片，计算50次权重线程和. 50是隐藏结点（神经网络中间结点）的数量。
+        # x可能是多张图片，X.shape[0]是图片数量。每一张图片都要计算50次权重线程和。
         a1 = np.dot(x, W1) + b1
         z1 = sigmoid(a1)
         a2 = np.dot(z1, W2) + b2
         y = softmax(a2)
-        
+
+        # y.shape = (图片数量, 10) 10是输出结点的数量。
         return y
         
     # x:输入数据, t:监督数据

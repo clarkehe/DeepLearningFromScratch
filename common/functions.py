@@ -43,13 +43,14 @@ def softmax(x):
     x = x - np.max(x) # 溢出对策
     return np.exp(x) / np.sum(np.exp(x))
 
-# 均方误差
+# 均方误差(MSE)
 # y:预测数据
 # t:监督数据
 def mean_squared_error(y, t):
     return 0.5 * np.sum((y-t)**2)
 
 # 交叉熵损失函数
+# 可能有多组数据，最后除batch_size，求平均。
 def cross_entropy_error(y, t):
     if y.ndim == 1:
         t = t.reshape(1, t.size)
