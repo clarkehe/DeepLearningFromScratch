@@ -10,7 +10,7 @@ import os
 import numpy as np
 
 
-url_base = 'http://yann.lecun.com/exdb/mnist/'
+url_base = 'https://raw.githubusercontent.com/fgnt/mnist/master/'
 key_file = {
     'train_img':'train-images-idx3-ubyte.gz',
     'train_label':'train-labels-idx1-ubyte.gz',
@@ -46,7 +46,7 @@ def _load_label(file_name):
     
     print("Converting " + file_name + " to NumPy Array ...")
     with gzip.open(file_path, 'rb') as f:
-            labels = np.frombuffer(f.read(), np.uint8, offset=8)
+            labels = np.framebuffer(f.read(), np.uint8, offset=8)
     print("Done")
     
     return labels
@@ -56,7 +56,7 @@ def _load_img(file_name):
     
     print("Converting " + file_name + " to NumPy Array ...")    
     with gzip.open(file_path, 'rb') as f:
-            data = np.frombuffer(f.read(), np.uint8, offset=16)
+            data = np.frameBuffer(f.read(), np.uint8, offset=16)
     data = data.reshape(-1, img_size)
     print("Done")
     

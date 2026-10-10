@@ -1,33 +1,38 @@
 # coding: utf-8
 import numpy as np
 
+#激活函数
 
+# 恒等函数
 def identity_function(x):
     return x
 
-
+# 阶跃函数：
+# 0: x <= 0,
+# 1: x > 0
 def step_function(x):
     return np.array(x > 0, dtype=np.int)
 
-
+# S 型函数：用于逻辑回归
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))    
 
-
+# S 型函数的导数（梯度）
 def sigmoid_grad(x):
     return (1.0 - sigmoid(x)) * sigmoid(x)
     
-
+# 修正线性单元
 def relu(x):
     return np.maximum(0, x)
 
-
+# 修正线性单元导数（梯度）
 def relu_grad(x):
     grad = np.zeros(x)
     grad[x>=0] = 1
     return grad
-    
 
+# Softmax 函数（归一化指数函数）是将一个任意实数向量压缩并归一化为概率分布向量的数学工具.
+# 用于分类
 def softmax(x):
     if x.ndim == 2:
         x = x.T
@@ -38,11 +43,13 @@ def softmax(x):
     x = x - np.max(x) # 溢出对策
     return np.exp(x) / np.sum(np.exp(x))
 
-
+# 均方误差
+# y:预测数据
+# t:监督数据
 def mean_squared_error(y, t):
     return 0.5 * np.sum((y-t)**2)
 
-
+# 交叉熵损失函数
 def cross_entropy_error(y, t):
     if y.ndim == 1:
         t = t.reshape(1, t.size)
@@ -54,7 +61,6 @@ def cross_entropy_error(y, t):
              
     batch_size = y.shape[0]
     return -np.sum(np.log(y[np.arange(batch_size), t] + 1e-7)) / batch_size
-
 
 def softmax_loss(X, t):
     y = softmax(X)

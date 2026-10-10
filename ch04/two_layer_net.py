@@ -10,6 +10,8 @@ class TwoLayerNet:
     def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.01):
         # 初始化权重
         self.params = {}
+
+        # randn生成的是正态分布（Gaussian Distribution）的随机数，0 附近的数值出现概率更高，且包含负数。一般在【-3， 3】之间。
         self.params['W1'] = weight_init_std * np.random.randn(input_size, hidden_size)
         self.params['b1'] = np.zeros(hidden_size)
         self.params['W2'] = weight_init_std * np.random.randn(hidden_size, output_size)
@@ -18,7 +20,8 @@ class TwoLayerNet:
     def predict(self, x):
         W1, W2 = self.params['W1'], self.params['W2']
         b1, b2 = self.params['b1'], self.params['b2']
-    
+
+        # 每一张图片，计算50次权重线程和. 50是隐藏结点（神经网络中间结点）的数量。
         a1 = np.dot(x, W1) + b1
         z1 = sigmoid(a1)
         a2 = np.dot(z1, W2) + b2
