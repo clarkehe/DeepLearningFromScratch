@@ -38,8 +38,8 @@ for i in range(iters_num):
     t_batch = t_train[batch_mask]
     
     # 计算梯度 （用到100个训练样本）
-    grad = network.numerical_gradient(x_batch, t_batch)
-    #grad = network.gradient(x_batch, t_batch)
+    #grad = network.numerical_gradient(x_batch, t_batch)
+    grad = network.gradient(x_batch, t_batch)
     
     # 更新参数
     for key in ('W1', 'b1', 'W2', 'b2'):

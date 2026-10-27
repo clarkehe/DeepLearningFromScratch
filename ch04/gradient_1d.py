@@ -15,7 +15,7 @@ def function_1(x):
 def tangent_line(f, x):
     d = numerical_diff(f, x)
     print(d)
-    y = f(x) - d*x
+    y = f(x) - d*x  # 切线也经过 [x, f(x)]
     return lambda t: d*t + y
      
 x = np.arange(0.0, 20.0, 0.1)
@@ -23,7 +23,7 @@ y = function_1(x)
 plt.xlabel("x")
 plt.ylabel("f(x)")
 
-tf = tangent_line(function_1, 5)
+tf = tangent_line(function_1, 5) #特定点的切线
 y2 = tf(x)
 
 plt.plot(x, y)

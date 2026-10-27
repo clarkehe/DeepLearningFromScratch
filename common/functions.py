@@ -58,10 +58,18 @@ def cross_entropy_error(y, t):
         
     # 监督数据是one-hot-vector的情况下，转换为正确解标签的索引
     if t.size == y.size:
-        t = t.argmax(axis=1)
+        t = t.argmax(axis=1)# 按行找最大值索引
              
-    batch_size = y.shape[0]
-    return -np.sum(np.log(y[np.arange(batch_size), t] + 1e-7)) / batch_size
+    batch_size = y.shape[0] #多少行数据。 每一行，取出正确解标签对应的预测值，一行是一张图片的预测值
+    # 交叉熵损失函数公式：-Σt*log(y)
+    # 取出正确解标签对应的预测值，求对数，再求和
+    # 1e-7是为了避免log(0)的情况
+    # y[np.arange(batch_size), t] 取出每一行中正确解标签对应的预测值
+    # np.log(tmp + 1e-7) 求对数，再求和，最后除以batch_size，求平均。
+    # 交叉�熵损失函数的公式是：-Σt*log(y)，其中t是正确解标签，y是预测值。
+    # 对于one-hot编码的t，只有正确解标签对应的y会被取出，其他的t都是0，所以只需要取出正确解标签对应的y即可。
+    tmp = y[np.arange(batch_size), t]
+    return -np.sum(np.log(tmp + 1e-7)) / batch_size
 
 def softmax_loss(X, t):
     y = softmax(X)

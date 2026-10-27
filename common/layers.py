@@ -4,10 +4,16 @@ from common.functions import *
 from common.util import im2col, col2im
 
 
+# Relu 函数方程：
+# f(x) = max(0, x) = {
+#     0, x <= 0
+#     x, x > 0
+# }
 class Relu:
     def __init__(self):
         self.mask = None
 
+    # x只能是数组, 不能是标量，不然会报错
     def forward(self, x):
         self.mask = (x <= 0)
         out = x.copy()
@@ -21,7 +27,8 @@ class Relu:
 
         return dx
 
-
+# Sigmoid 函数方程：
+# f(x) = 1 / (1 + exp(-x))
 class Sigmoid:
     def __init__(self):
         self.out = None
@@ -37,6 +44,8 @@ class Sigmoid:
         return dx
 
 
+# 仿射变换：
+# y = xW + b
 class Affine:
     def __init__(self, W, b):
         self.W =W
@@ -44,6 +53,7 @@ class Affine:
         
         self.x = None
         self.original_x_shape = None
+
         # 权重和偏置参数的导数
         self.dW = None
         self.db = None
@@ -51,7 +61,8 @@ class Affine:
     def forward(self, x):
         # 对应张量
         self.original_x_shape = x.shape
-        x = x.reshape(x.shape[0], -1)
+        #x.shape[0] 是保留输入的第一个维度；对全连接层的批量输入来说，它就是样本数
+        x = x.reshape(x.shape[0], -1) # 行不变，列变为一维
         self.x = x
 
         out = np.dot(self.x, self.W) + self.b

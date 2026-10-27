@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pylab as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-
+# x各个分量的偏导数
 def _numerical_gradient_no_batch(f, x):
     h = 1e-4 # 0.0001
     grad = np.zeros_like(x)
@@ -34,12 +34,13 @@ def numerical_gradient(f, X):
         
         return grad
 
-
+# 原函数是平方和函数
+# x0 * x0 + x1 * x1
 def function_2(x):
     if x.ndim == 1:
         return np.sum(x**2)
     else:
-        return np.sum(x**2, axis=1)
+        return np.sum(x**2, axis=1) # 按行求和
 
 
 def tangent_line(f, x):
