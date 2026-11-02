@@ -28,7 +28,6 @@ class TwoLayerNet:
     def predict(self, x):
         for layer in self.layers.values():
             x = layer.forward(x)
-        
         return x
         
     # x:输入数据, t:监督数据
@@ -40,7 +39,6 @@ class TwoLayerNet:
         y = self.predict(x)
         y = np.argmax(y, axis=1)
         if t.ndim != 1 : t = np.argmax(t, axis=1)
-        
         accuracy = np.sum(y == t) / float(x.shape[0])
         return accuracy
         

@@ -72,7 +72,7 @@ class Affine:
     def backward(self, dout):
         dx = np.dot(dout, self.W.T)
         self.dW = np.dot(self.x.T, dout)
-        self.db = np.sum(dout, axis=0)
+        self.db = np.sum(dout, axis=0) # 按列求和，得到每个偏置的梯度
         
         dx = dx.reshape(*self.original_x_shape)  # 还原输入数据的形状（对应张量）
         return dx
