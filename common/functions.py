@@ -35,9 +35,20 @@ def relu_grad(x):
 # 用于分类
 def softmax(x):
     if x.ndim == 2:
-        x = x - np.max(x, axis=1, keepdims=True)
-        exp_x = np.exp(x)
-        return exp_x / np.sum(exp_x, axis=1, keepdims=True)
+        # 这段 softmax 转置，是为了按列计算：
+        # 假设输入形状是 (批次数, 类别数)，转置后每一列对应一个样本，
+        # 于是用 axis=0 对类别做归一化，最后再转置回来。
+        x = x.T
+        maxes = np.max(x, axis=0) # 每列找最大值
+        x = x - maxes
+        sums = np.sum(np.exp(x), axis=0) # 每列求和
+        expX = np.exp(x)
+        # expX 是10行3列，sums是1行3列
+        # expX / sums 是怎么除的呢？
+        # 这是广播机制，sums 会被广播成10行3列，每一列都是相同的值，然后再进行逐元素相除。
+        # expX 中每一列除的值是一样的，都是该列的和。这样就实现了每列归一化。
+        y = expX / sums # 每列归一化
+        return y.T
 
     x = x - np.max(x) # 溢出对策
     return np.exp(x) / np.sum(np.exp(x))
