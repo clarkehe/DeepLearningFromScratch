@@ -40,9 +40,9 @@ def softmax(x):
         # 于是用 axis=0 对类别做归一化，最后再转置回来。
         x = x.T
         maxes = np.max(x, axis=0) # 每列找最大值
-        x = x - maxes
-        sums = np.sum(np.exp(x), axis=0) # 每列求和
+        x = x - maxes # 每列减去最大值
         expX = np.exp(x)
+        sums = np.sum(expX, axis=0) # 每列求和
         # expX 是10行3列，sums是1行3列
         # expX / sums 是怎么除的呢？
         # 这是广播机制，sums 会被广播成10行3列，每一列都是相同的值，然后再进行逐元素相除。
