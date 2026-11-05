@@ -1,6 +1,11 @@
 # coding: utf-8
 import sys, os
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
 sys.path.append(os.pardir)  # 为了导入父目录的文件而进行的设定
+
 import numpy as np
 from dataset.mnist import load_mnist
 from two_layer_net import TwoLayerNet
