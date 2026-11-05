@@ -35,10 +35,9 @@ def relu_grad(x):
 # 用于分类
 def softmax(x):
     if x.ndim == 2:
-        x = x.T
-        x = x - np.max(x, axis=0)
-        y = np.exp(x) / np.sum(np.exp(x), axis=0)
-        return y.T 
+        x = x - np.max(x, axis=1, keepdims=True)
+        exp_x = np.exp(x)
+        return exp_x / np.sum(exp_x, axis=1, keepdims=True)
 
     x = x - np.max(x) # 溢出对策
     return np.exp(x) / np.sum(np.exp(x))
